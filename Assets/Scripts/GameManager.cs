@@ -15,7 +15,10 @@ public class GameManager : MonoBehaviour
     public bool isGameActive;
     public Button restartButton;
     public GameObject titleScreen;
-    
+    public AudioClip ballSound;
+    public AudioClip bombSound;
+    public AudioSource playerAudio;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,5 +79,16 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         Application.Quit();
+    }
+
+    public void PlayBallSound()
+    {
+        playerAudio = gameObject.GetComponent<AudioSource>();
+        playerAudio.PlayOneShot(ballSound);
+    }
+    public void PlayBombSound()
+    {
+        playerAudio = gameObject.GetComponent<AudioSource>();
+        playerAudio.PlayOneShot(bombSound);
     }
 }
