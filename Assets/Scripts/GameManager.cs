@@ -8,8 +8,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> targets;
-    private float spawnRate = 1.5f;
+    private float spawnRate = 1.25f;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI livesText;
     private int score;
     public TextMeshProUGUI gameOverText;
     public bool isGameActive;
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     public AudioClip ballSound;
     public AudioClip bombSound;
     public AudioSource playerAudio;
+    public int lives;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +56,17 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score;
     }
 
+    //method to decrease lives
+    public void UpdateLives()
+    {
+        lives--;
+        if(lives < 0)
+        {
+            lives = 0;
+        }
+        livesText.text = "Lives: " + lives;
+    }
+
     public void GameOver()
     {
         gameOverText.gameObject.SetActive(true);
@@ -74,6 +87,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SpawnTarget());
         score = 0;
         UpdateScore(0);
+        livesText.text = "Lives: " + lives; //show initial number of lives
     }
 
     public void EndGame()

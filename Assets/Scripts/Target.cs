@@ -55,7 +55,11 @@ public class Target : MonoBehaviour
             if (gameObject.CompareTag("Bad"))
             {
                 gameManager.PlayBombSound();
-                gameManager.GameOver();
+                gameManager.UpdateLives();
+                if(gameManager.lives == 0)
+                {
+                    gameManager.GameOver();
+                }
             }
 
             gameManager.UpdateScore(pointValue);
@@ -69,7 +73,11 @@ public class Target : MonoBehaviour
         Destroy(gameObject);
         if (!gameObject.CompareTag("Bad"))
         {
-            gameManager.GameOver();
+            gameManager.UpdateLives();
+            if (gameManager.lives == 0)
+            {
+                gameManager.GameOver();
+            }
         }
     }
 }
