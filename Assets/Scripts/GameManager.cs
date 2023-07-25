@@ -11,8 +11,10 @@ public class GameManager : MonoBehaviour
     private float spawnRate = 1.25f;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
+    public TextMeshProUGUI highScoreText;
     private int score;
     public int lives;
+    private int highScore;
     public TextMeshProUGUI gameOverText;
     public bool isGameActive;
     public Button restartButton;
@@ -25,6 +27,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         titleScreen.gameObject.SetActive(true);
+
+        //associate player prefs HighScore to highScore and set default value to 0
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        highScoreText.text = "High Score: " + highScore;
     }
 
     // Update is called once per frame
@@ -54,6 +60,12 @@ public class GameManager : MonoBehaviour
             score = 0;
         }
         scoreText.text = "Score: " + score;
+
+        //use playerprefs to store data from score variable, highscore is key name
+        if (score > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            UpdateHighScore();
+        }
     }
 
     //method to decrease lives
@@ -104,5 +116,12 @@ public class GameManager : MonoBehaviour
     {
         playerAudio = gameObject.GetComponent<AudioSource>();
         playerAudio.PlayOneShot(bombSound);
+    }
+
+    public void UpdateHighScore()
+    {
+        PlayerPrefs.SetInt("HighScore", score);
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        highScoreText.text = "High Score: " + highScore;
     }
 }
